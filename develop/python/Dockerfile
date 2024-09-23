@@ -7,9 +7,12 @@ ENV PYTHONUNBUFFERED=1
 ARG staticjinja_plus_branch=main
 
 
-ADD https://github.com/MrDave/StaticJinjaPlus.git /StaticJinjaPlus
+ADD --checksum=sha256:${hash_sum} https://github.com/MrDave/StaticJinjaPlus/archive/refs/tags/${staticjinja_plus_version}.tar.gz staticjinja.tar.gz
+RUN tar -xzf staticjinja.tar.gz && \
+    rm staticjinja.tar.gz
 
-WORKDIR /StaticJinjaPlus
+
+WORKDIR /StaticJinjaPlus-${staticjinja_plus_version}
 
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
